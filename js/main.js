@@ -79,13 +79,14 @@ function animatePageElements() {
     });
 }
 
-// Умная шапка для мобильных устройств
+// Умная шапка для мобильных устройств - ОПТИМИЗИРОВАННАЯ
 function initSmartHeader() {
     const header = document.querySelector('header');
     const navLinks = document.querySelector('.nav-links');
 
     let lastScrollY = window.scrollY;
     let isMobile = window.innerWidth <= 768;
+    let ticking = false; // 👈 Дебаунсинг для производительности
 
     function updateHeaderState() {
         isMobile = window.innerWidth <= 768;
@@ -106,12 +107,20 @@ function initSmartHeader() {
             header.classList.remove('compact', 'expanded');
         }
 
-        lastScrollY = scrollY;
+        ticking = false;
+    }
+
+    // Оптимизированный обработчик скролла с дебаунсингом
+    function onScroll() {
+        if (!ticking) {
+            requestAnimationFrame(updateHeaderState);
+            ticking = true;
+        }
     }
 
     // Обработчики событий
-    window.addEventListener('scroll', updateHeaderState);
-    window.addEventListener('resize', updateHeaderState);
+    window.addEventListener('scroll', onScroll, { passive: true }); // 👈 passive для производительности
+    window.addEventListener('resize', updateHeaderState, { passive: true });
 
     // Клик по логотипу на мобильных - развернуть меню
     header.addEventListener('click', function(e) {
