@@ -79,8 +79,63 @@ function animatePageElements() {
     });
 }
 
+// Умная шапка для мобильных устройств
+function initSmartHeader() {
+    const header = document.querySelector('header');
+    const navLinks = document.querySelector('.nav-links');
+
+    let lastScrollY = window.scrollY;
+    let isMobile = window.innerWidth <= 768;
+
+    function updateHeaderState() {
+        isMobile = window.innerWidth <= 768;
+        const scrollY = window.scrollY;
+
+        if (isMobile) {
+            if (scrollY === 0) {
+                // В самом верху - показываем все
+                header.classList.add('expanded');
+                header.classList.remove('compact');
+            } else if (scrollY > 50) {
+                // Ниже 50px - скрываем кнопки
+                header.classList.add('compact');
+                header.classList.remove('expanded');
+            }
+        } else {
+            // На десктопе убираем все компактные стили
+            header.classList.remove('compact', 'expanded');
+        }
+
+        lastScrollY = scrollY;
+    }
+
+    // Обработчики событий
+    window.addEventListener('scroll', updateHeaderState);
+    window.addEventListener('resize', updateHeaderState);
+
+    // Клик по логотипу на мобильных - развернуть меню
+    header.addEventListener('click', function(e) {
+        if (isMobile && e.target.closest('.logo')) {
+            header.classList.toggle('expanded');
+            // Прокрутка к верху при клике на логотип
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+
+    // Клик по ссылке на мобильных - закрыть меню если компактный режим
+    navLinks.addEventListener('click', function(e) {
+        if (isMobile && e.target.tagName === 'A' && header.classList.contains('compact')) {
+            header.classList.remove('expanded');
+        }
+    });
+
+    // Инициализация при загрузке
+    updateHeaderState();
+}
+
 // Ripple эффект для glass элементов
 document.addEventListener('DOMContentLoaded', function() {
+
     document.querySelectorAll('.glass').forEach(element => {
         element.addEventListener('click', function(e) {
             // Создаем элемент ripple
@@ -125,6 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     `;
     document.head.appendChild(rippleStyle);
+    initSmartHeader();
 });
 
 // Обработка ховер эффектов для карточек
@@ -141,6 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+
 
 // Инициализация при загрузке страницы
 document.addEventListener('DOMContentLoaded', function() {
