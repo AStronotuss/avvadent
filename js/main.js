@@ -1,225 +1,710 @@
-// main.js
+/* style.css */
+@charset "UTF-8";
 
-let currentPage = 'home';
-
-// Основная функция навигации
-function showPage(pageId) {
-    // Скрываем все страницы
-    document.querySelectorAll('.page').forEach(page => {
-        page.classList.remove('active');
-    });
-
-    // Показываем выбранную страницу
-    document.getElementById(pageId).classList.add('active');
-
-    // Обновляем навигацию
-    document.querySelectorAll('.nav-links a').forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('onclick') === `showPage('${pageId}')`) {
-            link.classList.add('active');
-        }
-    });
-
-    currentPage = pageId;
-
-    // Перемещаем футер на активную страницу
-    const footer = document.getElementById('footer');
-    const activePage = document.getElementById(pageId);
-    activePage.appendChild(footer);
-
-    // Плавная прокрутка к верху
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    // Запускаем анимации для новой страницы
-    animatePageElements();
+/* Базовые стили */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Параллакс эффект для фоновых фигур
-document.addEventListener('mousemove', (e) => {
-    const shapes = document.querySelectorAll('.shape');
-    const x = e.clientX / window.innerWidth;
-    const y = e.clientY / window.innerHeight;
-
-    shapes.forEach((shape, index) => {
-        const speed = (index + 1) * 0.3;
-        const xPos = (x - 0.5) * speed * 15;
-        const yPos = (y - 0.5) * speed * 15;
-        shape.style.transform = `translate(${xPos}px, ${yPos}px) rotate(var(--start-rotation, 0deg))`;
-    });
-});
-
-// Анимация элементов при скролле
-function animateOnScroll() {
-    const elements = document.querySelectorAll('.advantage-card, .stat-card');
-
-    elements.forEach(element => {
-        const elementTop = element.getBoundingClientRect().top;
-        const elementVisible = 150;
-
-        if (elementTop < window.innerHeight - elementVisible) {
-            element.style.opacity = "1";
-            element.style.transform = "translateY(0)";
-        }
-    });
+body {
+    font-family: 'Montserrat', 'Open Sans', sans-serif;
+    background: linear-gradient(
+        135deg,
+        #0c0c0c 0%,
+        #1a1a2e 15%,
+        #16213e 35%,
+        #0f3460 50%,
+        #533a7d 70%,
+        #8b5a8c 85%,
+        #a0616a 100%
+    );
+    min-height: 100vh;
+    overflow-x: hidden;
+    color: #333;
+    line-height: 1.6;
 }
 
-// Анимация элементов страницы
-function animatePageElements() {
-    const elements = document.querySelectorAll('.advantage-card, .stat-card, .contact-item');
-
-    elements.forEach((element, index) => {
-        element.style.opacity = "0";
-        element.style.transform = "translateY(30px)";
-        element.style.transition = "all 0.6s ease";
-
-        setTimeout(() => {
-            element.style.opacity = "1";
-            element.style.transform = "translateY(0)";
-        }, 100 * index);
-    });
+/* Анимированный фон с фигурами */
+.bg-shapes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
 }
 
-// Умная шапка для мобильных устройств
-function initSmartHeader() {
-    const header = document.querySelector('header');
-    const navLinks = document.querySelector('.nav-links');
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.08);
+    animation: float 8s ease-in-out infinite;
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+}
 
-    let lastScrollY = window.scrollY;
-    let isMobile = window.innerWidth <= 768;
+.shape:nth-child(1) {
+    width: 120px;
+    height: 80px;
+    top: 10%;
+    left: 5%;
+    animation-delay: 0s;
+    transform: rotate(15deg);
+}
 
-    function updateHeaderState() {
-        isMobile = window.innerWidth <= 768;
-        const scrollY = window.scrollY;
+.shape:nth-child(2) {
+    width: 90px;
+    height: 140px;
+    top: 60%;
+    right: 10%;
+    animation-delay: 2s;
+    transform: rotate(-20deg);
+}
 
-        if (isMobile) {
-            if (scrollY === 0) {
-                // В самом верху - показываем все
-                header.classList.add('expanded');
-                header.classList.remove('compact');
-            } else if (scrollY > 50) {
-                // Ниже 50px - скрываем кнопки
-                header.classList.add('compact');
-                header.classList.remove('expanded');
-            }
-        } else {
-            // На десктопе убираем все компактные стили
-            header.classList.remove('compact', 'expanded');
-        }
+.shape:nth-child(3) {
+    width: 100px;
+    height: 60px;
+    bottom: 20%;
+    left: 15%;
+    animation-delay: 4s;
+    transform: rotate(25deg);
+}
 
-        lastScrollY = scrollY;
+.shape:nth-child(4) {
+    width: 80px;
+    height: 120px;
+    top: 15%;
+    right: 25%;
+    animation-delay: 6s;
+    transform: rotate(-10deg);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(var(--start-rotation, 0deg));
+    }
+    50% {
+        transform: translateY(-20px) rotate(calc(var(--start-rotation, 0deg) + 180deg));
+    }
+}
+
+/* Glass morphism эффекты */
+.glass {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.glass:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
+}
+
+.glass::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+.glass:hover::before {
+    left: 100%;
+}
+
+/* Контейнер */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Навигация */
+header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-icon svg {
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+    transition: all 0.3s ease;
+}
+
+.logo:hover .logo-icon svg {
+    transform: scale(1.1);
+    filter: drop-shadow(0 4px 12px rgba(255, 255, 255, 0.4));
+}
+
+.clinic-name {
+    color: #4FC3F7;
+    text-shadow: 0 0 20px rgba(79, 195, 247, 0.5);
+}
+
+.nav-links {
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    border-bottom-color: #4FC3F7;
+}
+
+/* Система страниц */
+.page {
+    display: none;
+    min-height: 100vh;
+    padding: 40px 0 20px;
+}
+
+.page.active {
+    display: block;
+}
+
+.content-wrapper {
+    min-height: calc(100vh - 200px);
+}
+
+/* Главный герой секция */
+.main-hero-section {
+    margin-bottom: 60px;
+}
+
+.main-hero-content {
+    padding: 80px 40px;
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.main-hero-content h1 {
+    font-size: 3rem;
+    color: white;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    line-height: 1.2;
+}
+
+.main-hero-subtitle {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Контакты на главной */
+.main-contacts-section {
+    margin-bottom: 60px;
+}
+
+.contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.contact-info {
+    padding: 40px;
+}
+
+.contact-info h2 {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 25px;
+}
+
+.contact-item-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+.contact-item-text h4 {
+    color: white;
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+}
+
+.contact-item-text p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.5;
+}
+
+.contact-map {
+    padding: 40px;
+}
+
+.contact-map h2 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    color: white;
+}
+
+.map-container {
+    width: 100%;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+}
+
+.map-placeholder-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+.map-placeholder p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+/* Секции */
+.section-title {
+    font-size: 2.5rem;
+    color: white;
+    text-align: center;
+    margin-bottom: 50px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Преимущества */
+.advantages-section {
+    margin-bottom: 60px;
+}
+
+.advantages-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.advantage-card {
+    padding: 30px;
+    text-align: center;
+    color: white;
+}
+
+.advantage-number {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4FC3F7;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 10px rgba(79, 195, 247, 0.3);
+}
+
+.advantage-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: white;
+}
+
+.advantage-card p {
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+}
+
+/* Страница "О клинике" */
+.about-content {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+    align-items: start;
+}
+
+.about-text {
+    padding: 40px;
+    color: white;
+}
+
+.about-text h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.about-text p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+}
+
+.about-text h3 {
+    font-size: 1.5rem;
+    margin: 30px 0 15px;
+    color: white;
+}
+
+.about-text ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.about-text li {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 10px;
+    padding-left: 25px;
+    position: relative;
+}
+
+.about-text li:before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: #4FC3F7;
+    font-weight: bold;
+}
+
+.clinic-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 30px 20px;
+    color: white;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Герой секции для других страниц */
+.hero {
+    padding: 60px 40px;
+    text-align: center;
+    color: white;
+    margin-bottom: 40px;
+}
+
+.hero h1 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.hero p {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+}
+
+/* Футер */
+#footer {
+    margin-top: 60px;
+}
+
+.footer-content {
+    padding: 30px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+    padding: 5px 10px;
+}
+
+.footer-links a:hover {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.copyright {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 20px;
+    line-height: 1.5;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
     }
 
-    // Обработчики событий
-    window.addEventListener('scroll', updateHeaderState);
-    window.addEventListener('resize', updateHeaderState);
-
-    // Клик по логотипу на мобильных - развернуть меню
-    header.addEventListener('click', function(e) {
-        if (isMobile && e.target.closest('.logo')) {
-            header.classList.toggle('expanded');
-            // Прокрутка к верху при клике на логотип
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-
-    // Клик по ссылке на мобильных - закрыть меню если компактный режим
-    navLinks.addEventListener('click', function(e) {
-        if (isMobile && e.target.tagName === 'A' && header.classList.contains('compact')) {
-            header.classList.remove('expanded');
-        }
-    });
-
-    // Инициализация при загрузке
-    updateHeaderState();
+    .about-content {
+        grid-template-columns: 1fr;
+    }
 }
 
-// Ripple эффект для glass элементов
-document.addEventListener('DOMContentLoaded', function() {
-
-    document.querySelectorAll('.glass').forEach(element => {
-        element.addEventListener('click', function(e) {
-            // Создаем элемент ripple
-            const ripple = document.createElement('div');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
-
-            ripple.style.cssText = `
-                position: absolute;
-                width: ${size}px;
-                height: ${size}px;
-                left: ${x}px;
-                top: ${y}px;
-                background: rgba(255, 255, 255, 0.3);
-                border-radius: 50%;
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                pointer-events: none;
-                z-index: 1000;
-            `;
-
-            this.style.position = 'relative';
-            this.style.overflow = 'hidden';
-            this.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-
-    // Добавляем стили для ripple анимации
-    const rippleStyle = document.createElement('style');
-    rippleStyle.textContent = `
-        @keyframes ripple {
-            to {
-                transform: scale(4);
-                opacity: 0;
-            }
-        }
-    `;
-    document.head.appendChild(rippleStyle);
-    initSmartHeader();
-});
-
-// Обработка ховер эффектов для карточек
-document.addEventListener('DOMContentLoaded', function() {
-    const cards = document.querySelectorAll('.advantage-card');
-
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-});
-
-
-
-// Инициализация при загрузке страницы
-document.addEventListener('DOMContentLoaded', function() {
-    // Устанавливаем начальную позицию футера
-    const footer = document.getElementById('footer');
-    const homePage = document.getElementById('home');
-    if (footer && homePage) {
-        homePage.appendChild(footer);
+/* Мобильная шапка */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
     }
 
-    // Запускаем анимации
-    animatePageElements();
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        max-height: 60px;
+        overflow: hidden;
+    }
 
-    // Добавляем обработчик скролла
-    window.addEventListener('scroll', animateOnScroll);
+    .nav-links a {
+        padding: 8px 16px;
+        font-size: 14px;
+        flex-shrink: 0;
+    }
 
-    // Инициализируем первую анимацию
-    animateOnScroll();
+    /* Компактный режим - скрываем кнопки */
+    header.compact .nav-links {
+        max-height: 0;
+        opacity: 0;
+    }
 
-    console.log('Стоматология AVVADENT - сайт инициализирован');
-});
+    /* Полный режим - показываем кнопки */
+    header.expanded .nav-links {
+        max-height: 60px;
+        opacity: 1;
+    }
 
-// Экспорт функций для глобального использования
-window.showPage = showPage;
+    /* Логотип всегда виден */
+    .logo {
+        font-size: 22px;
+    }
+
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .main-hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    transition: all 0.3s ease;
+}
+
+/* Мобильная шапка - компактный режим */
+@media (max-width: 768px) {
+    header.compact {
+        padding: 10px 0;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+    }
+
+    header.compact nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    header.compact .nav-links {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    header.expanded .nav-links {
+        max-height: 200px;
+        opacity: 1;
+    }
+
+    /* Логотип в компактном режиме */
+    header.compact .logo {
+        font-size: 22px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    header.compact .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Навигационные ссылки */
+.nav-links {
+    display: flex;
+    gap: 25px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav-links a {
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        width: 100%;
+    }
+}
+
+/* Логотип */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
