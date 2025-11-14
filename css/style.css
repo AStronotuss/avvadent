@@ -551,59 +551,50 @@ nav {
     }
 }
 
+/* Мобильная шапка */
 @media (max-width: 768px) {
-    .page {
-        padding: 20px 0 10px;
-    }
-
-    .main-hero-content h1 {
-        font-size: 2.2rem;
-    }
-
-    .main-hero-subtitle {
-        font-size: 1.1rem;
-    }
-
     nav {
         flex-direction: column;
-        gap: 20px;
-        padding: 20px;
+        gap: 15px;
+        padding: 15px 20px;
+        transition: all 0.3s ease;
     }
 
     .nav-links {
-        gap: 10px;
         flex-wrap: wrap;
         justify-content: center;
+        gap: 10px;
+        transition: all 0.3s ease;
+        max-height: 60px;
+        overflow: hidden;
     }
 
     .nav-links a {
-        font-size: 14px;
         padding: 8px 16px;
+        font-size: 14px;
+        flex-shrink: 0;
     }
 
-    .advantages-grid {
-        grid-template-columns: 1fr;
+    /* Компактный режим - скрываем кнопки */
+    header.compact .nav-links {
+        max-height: 0;
+        opacity: 0;
     }
 
-    .clinic-stats {
-        grid-template-columns: 1fr;
+    /* Полный режим - показываем кнопки */
+    header.expanded .nav-links {
+        max-height: 60px;
+        opacity: 1;
     }
 
-    .footer-links {
-        gap: 15px;
-        flex-direction: column;
+    /* Логотип всегда виден */
+    .logo {
+        font-size: 22px;
     }
 
-    .section-title {
-        font-size: 2rem;
-    }
-
-    .main-hero-content,
-    .about-text,
-    .contact-info,
-    .contact-map,
-    .hero {
-        padding: 30px 20px;
+    .logo-icon {
+        width: 35px;
+        height: 35px;
     }
 }
 
@@ -624,4 +615,96 @@ nav {
         width: 35px;
         height: 35px;
     }
+}
+
+header {
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    transition: all 0.3s ease;
+}
+
+/* Мобильная шапка - компактный режим */
+@media (max-width: 768px) {
+    header.compact {
+        padding: 10px 0;
+        background: rgba(15, 23, 42, 0.95);
+        backdrop-filter: blur(20px);
+    }
+
+    header.compact nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    header.compact .nav-links {
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: all 0.3s ease;
+    }
+
+    header.expanded .nav-links {
+        max-height: 200px;
+        opacity: 1;
+    }
+
+    /* Логотип в компактном режиме */
+    header.compact .logo {
+        font-size: 22px;
+        width: 100%;
+        justify-content: center;
+    }
+
+    header.compact .logo-icon {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+/* Навигационные ссылки */
+.nav-links {
+    display: flex;
+    gap: 25px;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav-links a {
+        padding: 12px 20px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        width: 100%;
+    }
+}
+
+/* Логотип */
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
 }
