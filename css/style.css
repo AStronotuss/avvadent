@@ -255,27 +255,37 @@ nav {
 }
 
 .main-hero-content {
-    padding: 80px 40px;
+    padding: 60px 20px;
     text-align: center;
     color: white;
     margin-bottom: 40px;
+    box-sizing: border-box;
+    width: 100%;
 }
 
 .main-hero-content h1 {
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 6vw, 3rem);
     color: white;
     margin-bottom: 20px;
     text-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     line-height: 1.2;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    padding: 0 10px;
+    box-sizing: border-box;
 }
 
 .main-hero-subtitle {
-    font-size: 1.5rem;
+    font-size: clamp(1rem, 3.5vw, 1.5rem);
     color: rgba(255, 255, 255, 0.9);
-    line-height: 1.6;
-    max-width: 800px;
+    line-height: 1.4;
+    max-width: min(90%, 800px);
     margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+    word-wrap: break-word;
 }
+
 
 /* Контакты на главной */
 .main-contacts-section {
@@ -695,21 +705,29 @@ nav {
 
 /* Очень узкие экраны */
 @media (max-width: 480px) {
-    nav {
-        padding: 12px 15px;
-        margin: 0 5px;
+    .main-hero-content {
+        padding: 40px 15px;
     }
 
-    .nav-links {
-        gap: 6px;
+    .main-hero-content h1 {
+        font-size: clamp(1.5rem, 7vw, 2rem);
+        padding: 0 5px;
+        line-height: 1.3;
     }
 
-    .nav-links a {
-        padding: 6px 10px;
-        font-size: 13px;
+    .main-hero-subtitle {
+        font-size: clamp(0.9rem, 4vw, 1.2rem);
+        padding: 0 10px;
+        line-height: 1.5;
+    }
+}
+
+@media (max-width: 360px) {
+    .main-hero-content h1 {
+        font-size: 1.4rem;
     }
 
-    .logo {
-        font-size: 18px;
+    .main-hero-subtitle {
+        font-size: 0.95rem;
     }
 }
