@@ -150,7 +150,7 @@ nav {
     align-items: center;
     padding: 20px 40px;
     transition: all 0.3s ease;
-    background: rgba(255, 255, 255, 0.15); 
+    background: rgba(255, 255, 255, 0.15);
     backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 20px;
@@ -202,13 +202,13 @@ nav {
 
 .nav-links {
     display: flex;
-    gap: 15px; 
+    gap: 15px;
     transition: all 0.3s ease;
     flex-wrap: wrap;
-    justify-content: flex-end; 
+    justify-content: flex-end;
     align-items: center;
-    flex: 1; 
-    margin-left: 20px; 
+    flex: 1;
+    margin-left: 20px;
 }
 
 .nav-links a {
@@ -216,14 +216,14 @@ nav {
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    padding: 10px 15px; 
+    padding: 10px 15px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 15px;
     border-bottom: 2px solid transparent;
     white-space: nowrap;
     text-align: center;
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 .nav-links a:hover,
@@ -571,25 +571,25 @@ nav {
 
 @media (min-width: 769px) and (max-width: 1200px) {
     nav {
-        padding: 15px 30px; 
+        padding: 15px 30px;
         margin: 0 15px;
     }
 
     .nav-links {
-        gap: 10px; 
+        gap: 10px;
     }
 
     .nav-links a {
-        padding: 8px 12px; 
-        font-size: 14px; 
+        padding: 8px 12px;
+        font-size: 14px;
     }
 
     .logo {
-        font-size: 24px; 
+        font-size: 24px;
     }
 
     .logo-icon {
-        width: 40px; 
+        width: 40px;
         height: 40px;
     }
 }
@@ -601,17 +601,23 @@ nav {
         gap: 15px;
         padding: 15px 20px;
         margin: 0 10px;
+        /* Убираем сложные анимации для производительности */
+        transition: none;
     }
 
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
-        transition: all 0.3s ease;
+        /* ЗАМЕНЯЕМ сложную анимацию на простую */
+        transition: max-height 0.3s ease-out, opacity 0.2s linear;
         max-height: 500px;
         overflow: hidden;
-        margin-left: 0; 
+        margin-left: 0;
         width: 100%;
+        /* Отключаем дорогие свойства */
+        will-change: auto;
+        transform: none;
     }
 
     .nav-links a {
@@ -620,17 +626,25 @@ nav {
         flex-shrink: 0;
         background: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
-        white-space: nowrap; 
+        white-space: nowrap;
+        /* Упрощаем переходы */
+        transition: background-color 0.2s ease;
     }
 
-    /* Компактный режим - скрываем кнопки */
+    /* Компактный режим - УПРОЩЕННАЯ АНИМАЦИЯ */
     header.compact {
         padding: 5px 0;
+        /* Упрощаем фон для производительности */
+        background: rgba(15, 23, 42, 0.85); /* Меньше blur = быстрее */
+        backdrop-filter: blur(5px); /* 👈 УМЕНЬШАЕМ blur для скорости */
+        -webkit-backdrop-filter: blur(5px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     header.compact nav {
-        padding: 8px 15px; 
+        padding: 8px 15px;
         gap: 0;
+        transition: none;
     }
 
     header.compact .nav-links {
@@ -640,16 +654,42 @@ nav {
         padding: 0;
         gap: 0;
         border: none;
+        /* Отключаем transition когда скрыто */
+        transition: max-height 0.3s ease-out, opacity 0.15s linear;
     }
 
     /* Логотип на мобильных */
     .logo {
         font-size: 20px;
+        transition: none; /* Убираем анимацию логотипа */
     }
 
     .logo-icon {
         width: 30px;
         height: 30px;
+        transition: none;
+    }
+
+    /* Убираем hover эффекты на тач-устройствах */
+    @media (hover: none) {
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1); /* Отключаем hover */
+        }
+    }
+}
+
+/* Дополнительная оптимизация для слабых устройств */
+@media (max-width: 768px) and (prefers-reduced-motion: reduce) {
+    .nav-links {
+        transition: none !important;
+    }
+
+    header.compact .nav-links {
+        transition: none !important;
+    }
+
+    .glass {
+        transition: none !important;
     }
 }
 
