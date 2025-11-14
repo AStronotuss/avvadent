@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стоматология AVVADENT - современная стоматология в Волгограде</title>
+    <meta name="description" content="Современная стоматология AVVADENT в Волгограде. Лечение, протезирование, имплантация. Запись на прием онлайн. Работаем без выходных с 8:00 до 20:00">
+
+    <!-- CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <style>
+        .page { display: none; }
+        .page.active { display: block; }
+    </style>
+</head>
+<body>
+    <!-- Анимированный фон -->
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!-- Навигация -->
+    <header>
+        <div class="container">
+            <nav class="glass">
+                <div class="logo" onclick="showPage('home')">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 48 48" fill="white" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 6C14.06 6 6 14.06 6 24s8.06 18 18 18 18-8.06 18-18S33.94 6 24 6zm0 34C15.16 40 8 32.84 8 24S15.16 8 24 8s16 7.16 16 16-7.16 16-16 16z"/>
+                            <path d="M32 20h-6v-6c0-1.1-.9-2-2-2s-2 .9-2 2v6h-6c-1.1 0-2 .9-2 2s.9 2 2 2h6v6c0 1.1.9 2 2 2s2-.9 2-2v-6h6c1.1 0 2-.9 2-2s-.9-2-2-2z"/>
+                        </svg>
+                    </div>
+                    <span>AVVADENT</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#" onclick="showPage('home')" class="active">Главная</a>
+                    <a href="#" onclick="showPage('services')">Услуги</a>
+                    <a href="#" onclick="showPage('doctors')">Врачи</a>
+                    <a href="#" onclick="showPage('about')">О клинике</a>
+                    <a href="#" onclick="showPage('prices')">Цены</a>
+                    <a href="#" onclick="showPage('contact')">Контакты</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ГЛАВНАЯ СТРАНИЦА -->
+    <div id="home" class="page active">
+        <div class="container">
+            <!-- Главный текст -->
+            <section class="main-hero-section">
+                <div class="main-hero-content glass">
+                    <h1>Современная стоматология <span class="clinic-name">AVVADENT</span></h1>
+                    <p class="main-hero-subtitle">Ваша улыбка - наша профессия. Лечение, протезирование, имплантация и эстетическая стоматология в Волгограде</p>
+                </div>
+            </section>
+
+            <!-- Контакты на главной -->
+            <section class="main-contacts-section">
+                <div class="contact-grid">
+                    <div class="contact-info glass">
+                        <h2>Контакты</h2>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📍</div>
+                            <div class="contact-item-text">
+                                <h4>Адрес</h4>
+                                <p>г. Волгоград, ул. Новороссийская, д. 2к, пом. 2</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📞</div>
+                            <div class="contact-item-text">
+                                <h4>Телефон</h4>
+                                <p>+7 (960) 879-61-73</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📧</div>
+                            <div class="contact-item-text">
+                                <h4>Email</h4>
+                                <p>nova.doc@mail.ru</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">🕒</div>
+                            <div class="contact-item-text">
+                                <h4>График работы</h4>
+                                <p>Ежедневно с 8:00 до 20:00<br>Суббота и воскресенье - без выходных</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-map glass">
+                        <h2>Как нас найти</h2>
+                        <div class="map-container">
+                            <div class="map-placeholder">
+                                <div class="map-placeholder-icon">🗺️</div>
+                                <p><strong>г. Волгоград</strong></p>
+                                <p>ул. Новороссийская, д. 2к, пом. 2</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Преимущества -->
+            <section class="advantages-section">
+                <h2 class="section-title">Почему выбирают AVVADENT</h2>
+                <div class="advantages-grid">
+                    <div class="advantage-card glass">
+                        <div class="advantage-number">01</div>
+                        <h3>Оснащение 6 стоматологическими креслами</h3>
+                        <p>Просторные кабинеты, оснащенные современным оборудованием</p>
+                    </div>
+
+                    <div class="advantage-card glass">
+                        <div class="advantage-number">02</div>
+                        <h3>Работаем без выходных</h3>
+                        <p>Ежедневно с 8:00 до 20:00. Удобное время для работающих пациентов</p>
+                    </div>
+
+                    <div class="advantage-card glass">
+                        <div class="advantage-number">03</div>
+                        <h3>Опытные специалисты</h3>
+                        <p>Врачи с многолетним стажем, регулярно повышающие квалификацию</p>
+                    </div>
+
+                    <div class="advantage-card glass">
+                        <div class="advantage-number">04</div>
+                        <h3>Прозрачные цены</h3>
+                        <p>Фиксированная стоимость лечения. Никаких скрытых платежей</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- УСЛУГИ -->
+    <div id="services" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="hero glass">
+                    <h1>Услуги</h1>
+                    <p>Страница находится в разработке</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- ВРАЧИ -->
+    <div id="doctors" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="hero glass">
+                    <h1>Врачи</h1>
+                    <p>Страница находится в разработке</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- ЦЕНЫ -->
+    <div id="prices" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="hero glass">
+                    <h1>Цены</h1>
+                    <p>Страница находится в разработке</p>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- О КЛИНИКЕ -->
+    <div id="about" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="about-content">
+                    <div class="about-text glass">
+                        <h2>О клинике AVVADENT</h2>
+                        <p>Стоматология <strong>AVVADENT</strong> - это современный медицинский центр в Волгограде, где сочетаются передовые технологии, опыт врачей и индивидуальный подход к каждому пациенту.</p>
+
+                        <p>Мы работаем, чтобы помочь пациентрам обрести здоровую и красивую улыбку. Наша клиника оснащена 6 стоматологическими креслами премиум-класса, цифровым рентген-аппаратом и современным оборудованием для диагностики и лечения.</p>
+
+                        <h3>Наши принципы:</h3>
+                        <ul>
+                            <li>Качество лечения на уровне европейских стандартов</li>
+                            <li>Индивидуальный подход к каждому пациенту</li>
+                            <li>Использование только сертифицированных материалов</li>
+                            <li>Прозрачность лечения и фиксированные цены</li>
+                            <li>Комфортная атмосфера и безболезненные процедуры</li>
+                        </ul>
+                    </div>
+
+                    <div class="clinic-stats">
+                        <div class="stat-card glass">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Стоматологических кресла</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-number">N</div>
+                            <div class="stat-label">Врачей-специалистов</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-number">N</div>
+                            <div class="stat-label">Довольных пациентов</div>
+                        </div>
+                        <div class="stat-card glass">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Лет стажа врачей</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- КОНТАКТЫ -->
+    <div id="contact" class="page">
+        <div class="container">
+            <div class="content-wrapper">
+                <section class="contact-grid">
+                    <div class="contact-info glass">
+                        <h2>Контакты</h2>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📍</div>
+                            <div class="contact-item-text">
+                                <h4>Адрес</h4>
+                                <p>г. Волгоград, ул. Новороссийская, д. 2к, пом. 2</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📞</div>
+                            <div class="contact-item-text">
+                                <h4>Телефон</h4>
+                                <p>+7 (960) 879-61-73</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">📧</div>
+                            <div class="contact-item-text">
+                                <h4>Email</h4>
+                                <p>nova.doc@mail.ru</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-item">
+                            <div class="contact-item-icon">🕒</div>
+                            <div class="contact-item-text">
+                                <h4>График работы</h4>
+                                <p>Ежедневно с 8:00 до 20:00<br>Суббота и воскресенье - без выходных</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-map glass">
+                        <h2>Как нас найти</h2>
+                        <div class="map-container">
+                            <div class="map-placeholder">
+                                <div class="map-placeholder-icon">🗺️</div>
+                                <p><strong>г. Волгоград</strong></p>
+                                <p>ул. Новороссийская, д. 2к, пом. 2</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+
+    <!-- Футер -->
+    <div id="footer">
+        <div class="container">
+            <footer class="glass">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="#" onclick="showPage('home')">Главная</a>
+                        <a href="#" onclick="showPage('services')">Услуги</a>
+                        <a href="#" onclick="showPage('doctors')">Врачи</a>
+                        <a href="#" onclick="showPage('about')">О клинике</a>
+                        <a href="#" onclick="showPage('contact')">Контакты</a>
+                    </div>
+                    <div class="copyright">
+                        &copy; 2025 Стоматология AVVADENT. ООО "НОВА". Все права защищены.<br>
+                        Лицензия на осуществление медицинской деятельности № ЛО-34-01-XXXXXX
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
