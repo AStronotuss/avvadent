@@ -604,30 +604,28 @@ nav {
     }
 }
 
-/* Мобильная шапка */
+/* Мобильная шапка - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* Мобильная шапка - ИСПРАВЛЕННАЯ ВЕРСИЯ */
 @media (max-width: 768px) {
     nav {
         flex-direction: column;
-        gap: 15px;
+        gap: 0; /* 👈 МЕНЯЕМ: убираем gap между логотипом и кнопками */
         padding: 15px 20px;
         margin: 0 10px;
-        /* Убираем сложные анимации для производительности */
         transition: none;
+        align-items: stretch; /* 👈 Выравниваем по ширине */
     }
 
     .nav-links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 8px;
-        /* ЗАМЕНЯЕМ сложную анимацию на простую */
-        transition: max-height 0.3s ease-out, opacity 0.2s linear;
-        max-height: 500px;
-        overflow: hidden;
+        transition: opacity 0.2s ease-out;
         margin-left: 0;
         width: 100%;
-        /* Отключаем дорогие свойства */
-        will-change: auto;
-        transform: none;
+        /* 👇 Добавляем для анимации высоты */
+        max-height: 200px; /* 👈 Максимальная высота развернутого состояния */
+        overflow: hidden;
     }
 
     .nav-links a {
@@ -637,41 +635,47 @@ nav {
         background: rgba(255, 255, 255, 0.1);
         border-radius: 8px;
         white-space: nowrap;
-        /* Упрощаем переходы */
         transition: background-color 0.2s ease;
     }
 
-    /* Компактный режим - УПРОЩЕННАЯ АНИМАЦИЯ */
+    /* Компактный режим */
     header.compact {
-        padding: 5px 0;
-        /* Упрощаем фон для производительности */
-        background: rgba(15, 23, 42, 0.85); /* Меньше blur = быстрее */
-        backdrop-filter: blur(5px); /* 👈 УМЕНЬШАЕМ blur для скорости */
-        -webkit-backdrop-filter: blur(5px);
+        padding: 8px 0; /* 👈 Одинаковый паддинг сверху и снизу */
+        background: rgba(15, 23, 42, 0.9);
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
         border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     header.compact nav {
-        padding: 8px 15px;
+        padding: 8px 15px; /* 👈 Компактный паддинг */
         gap: 0;
-        transition: none;
     }
 
     header.compact .nav-links {
-        max-height: 0;
+        /* 👇 Ключевое исправление - полностью убираем блок */
+        max-height: 0 !important; /* 👈 Принудительно обнуляем высоту */
         opacity: 0;
-        margin: 0;
-        padding: 0;
+        margin: 0 !important;
+        padding: 0 !important;
         gap: 0;
         border: none;
-        /* Отключаем transition когда скрыто */
-        transition: max-height 0.3s ease-out, opacity 0.15s linear;
+        /* 👇 Быстрая анимация */
+        transition: max-height 0.2s ease-out, opacity 0.15s ease-out;
+    }
+
+    /* Полный режим */
+    header.expanded .nav-links {
+        opacity: 1;
+        max-height: 200px; /* 👈 Возвращаем высоту */
+        transition: max-height 0.3s ease-out, opacity 0.2s ease-out;
     }
 
     /* Логотип на мобильных */
     .logo {
         font-size: 20px;
-        transition: none; /* Убираем анимацию логотипа */
+        transition: none;
+        margin-bottom: 0; /* 👈 Убираем отступ снизу */
     }
 
     .logo-icon {
@@ -679,27 +683,22 @@ nav {
         height: 30px;
         transition: none;
     }
-
-    /* Убираем hover эффекты на тач-устройствах */
-    @media (hover: none) {
-        .nav-links a:hover {
-            background: rgba(255, 255, 255, 0.1); /* Отключаем hover */
-        }
-    }
 }
 
-/* Дополнительная оптимизация для слабых устройств */
+
+/* Вариант для слабых устройств - вообще без анимации */
 @media (max-width: 768px) and (prefers-reduced-motion: reduce) {
     .nav-links {
         transition: none !important;
     }
 
     header.compact .nav-links {
+        display: none !important;
         transition: none !important;
     }
 
-    .glass {
-        transition: none !important;
+    header.expanded .nav-links {
+        display: flex !important;
     }
 }
 
